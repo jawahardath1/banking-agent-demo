@@ -1,0 +1,45 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: demobank
+      POSTGRES_PASSWORD: demobank
+      POSTGRES_DB: demobank
+    ports: ["127.0.0.1:5432:5432"]
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U demobank -d demobank"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  ingest:
+    build: ./backend
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://demobank:demobank@db:5432/demobank
+    depends_on:
+      db: {condition: service_healthy}
+    command: ["python", "-m", "app.ingest"]
+  backend:
+    build: ./backend
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://demobank:demobank@db:5432/demobank
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on:
+      ingest: {condition: service_completed_successfully}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  frontend:
+    build: ./frontend
+    ports: ["127.0.0.1:5173:80"]
+    depends_on:
+      backend: {condition: service_healthy}
+volumes:
+  postgres_data:

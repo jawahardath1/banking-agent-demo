@@ -1,0 +1,30 @@
+{
+  "title": "DemoBank Personal Loan Policy",
+  "version": "2026-09-demo",
+  "synthetic": true,
+  "pages": [
+    {
+      "page": 1,
+      "sections": [
+        {
+          "id": "PL-01",
+          "text": "Synthetic demo policy PL-01. Personal loans above $50,000 require Enhanced Manual Review. Loans at or below $50,000 satisfy the amount criterion.",
+          "rule": {
+            "field": "amount",
+            "operator": "gt",
+            "value": 50000
+          }
+        },
+        {
+          "id": "PL-02",
+          "text": "Synthetic demo policy PL-02. Terms longer than 60 months require Enhanced Manual Review. Terms up to 60 months satisfy the term criterion.",
+          "rule": {
+            "field": "term_months",
+            "operator": "gt",
+            "value": 60
+          }
+        }
+      ]
+    }
+  ]
+}

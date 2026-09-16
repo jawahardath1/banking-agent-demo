@@ -1,0 +1,30 @@
+{
+  "title": "DemoBank Income Verification Policy",
+  "version": "2026-09-demo",
+  "synthetic": true,
+  "pages": [
+    {
+      "page": 1,
+      "sections": [
+        {
+          "id": "IV-01",
+          "text": "Synthetic demo policy IV-01. Unverified income requires Enhanced Manual Review and collection of two recent pay slips and an employer verification letter. Verified income satisfies this criterion.",
+          "rule": {
+            "field": "income_verified",
+            "operator": "eq",
+            "value": false
+          }
+        },
+        {
+          "id": "IV-02",
+          "text": "Synthetic demo policy IV-02. Employment tenure below 12 months requires Enhanced Manual Review and an employment continuity check. At least 12 months satisfies the tenure criterion.",
+          "rule": {
+            "field": "employment_months",
+            "operator": "lt",
+            "value": 12
+          }
+        }
+      ]
+    }
+  ]
+}

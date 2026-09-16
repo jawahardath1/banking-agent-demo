@@ -1,0 +1,35 @@
+{
+  "title": "DemoBank Credit Risk Policy",
+  "version": "2026-09-demo",
+  "synthetic": true,
+  "pages": [
+    {
+      "page": 1,
+      "sections": [
+        {
+          "id": "CR-01",
+          "text": "Synthetic demo policy CR-01. A credit score below 660 requires Enhanced Manual Review. Scores of 660 or higher satisfy the credit-score criterion.",
+          "rule": {
+            "field": "credit_score",
+            "operator": "lt",
+            "value": 660
+          }
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "sections": [
+        {
+          "id": "CR-02",
+          "text": "Synthetic demo policy CR-02. A debt-to-income (DTI) ratio above 40 percent requires Enhanced Manual Review. Ratios at or below 40 percent satisfy the DTI criterion.",
+          "rule": {
+            "field": "dti_percent",
+            "operator": "gt",
+            "value": 40
+          }
+        }
+      ]
+    }
+  ]
+}
